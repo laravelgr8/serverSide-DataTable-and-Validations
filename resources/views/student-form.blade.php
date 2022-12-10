@@ -85,6 +85,18 @@
           	 	</div>
           	 </div>
 
+          	 <div class="col-xl-12">
+          	 	<div class="form-group">
+          	 		<label>Country : </label>
+          	 		<select name="country" class="form-control">
+          	 			<option>Select country</option>
+          	 			@foreach($countries as $data)
+          	 			<option value="{{$data->id}}">{{$data->country}}</option>
+          	 			@endforeach
+          	 		</select>
+          	 	</div>
+          	 </div>
+
           	 <div id="appendid">
           	 	<div class="form-group">
 	          	 	<div class="row" style="margin-left: 2px;">
@@ -101,6 +113,7 @@
           	 	@enderror
           	 </div>
           	 <br><br>
+
           	 <input type="submit" value="Signup" class="btn btn-block btn-info" id="submit">
           </form>
         </div>

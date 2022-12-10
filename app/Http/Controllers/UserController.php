@@ -9,7 +9,8 @@ use DataTables;
 class UserController extends Controller
 {
     public function index(){
-        return view('student-form');
+        $countries=DB::table('coutries')->get();
+        return view('student-form',compact('countries'));
     }
 
     public function save(Request $request){
@@ -40,7 +41,8 @@ class UserController extends Controller
             "password" =>$request->password,
             "gender" =>"F",
             "qualification" =>"MCA",
-            "pic" =>$Document_FileName
+            "pic" =>$Document_FileName,
+            "country" => $request->country
         ];
 
         
@@ -78,8 +80,10 @@ class UserController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
        
-                            $btn = '<a href="javascript:void(0)" data-eid="'.$row->id.'" class="edit btn btn-primary btn-sm">Edit</a>
-                            <a href="javascript:void(0)" data-did="'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
+                            // $btn = '<a href="javascript:void(0)" data-eid="'.$row->id.'" class="edit btn btn-primary btn-sm">Edit</a>
+                            // <a href="javascript:void(0)" data-did="'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
+                            $btn = '<a href="/edit/'.$row->id.'" data-eid="'.$row->id.'" class="edit btn btn-primary btn-sm">Edit</a>
+                             <a href="javascript:void(0)" data-did="'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
       
                             return $btn;
                     })
@@ -98,5 +102,20 @@ class UserController extends Controller
         }
           
         return view('student-form');
+    }
+
+
+
+    //for edit
+    public function edit($id){
+        $countries=DB::table('coutries')->get();
+        $data=DB::table('students')
+                       ->select('students.id as sid','students.name as name','students.email as email','students.country as country','coutries.country as country_name','coutries.id as country_id')
+                       ->join('coutries','coutries.id','=','students.country')
+                       ->first();
+                       // dd($data);
+        $mobile=DB::table('mobiles')->where('student_id',$id)->get();
+        // dd($mobile);
+        return view('edit',compact('countries','data','mobile'));
     }
 }

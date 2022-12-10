@@ -25,3 +25,4 @@ Route::get('/',[UserController::class,'index']);
 Route::post('/',[UserController::class,'save'])->name('create-student');
 
 Route::get('users', [UserController::class, 'show'])->name('users.index');
+Route::get('edit/{id}', [UserController::class, 'edit'])->name('users.edit');
