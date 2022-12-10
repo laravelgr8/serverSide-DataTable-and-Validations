@@ -9,7 +9,7 @@ use DataTables;
 class UserController extends Controller
 {
     public function index(){
-        $countries=DB::table('coutries')->get();
+        $countries=DB::table('countries')->get();
         return view('student-form',compact('countries'));
     }
 
@@ -108,10 +108,10 @@ class UserController extends Controller
 
     //for edit
     public function edit($id){
-        $countries=DB::table('coutries')->get();
+        $countries=DB::table('countries')->get();
         $data=DB::table('students')
-                       ->select('students.id as sid','students.name as name','students.email as email','students.country as country','coutries.country as country_name','coutries.id as country_id')
-                       ->join('coutries','coutries.id','=','students.country')
+                       ->select('students.id as sid','students.name as name','students.email as email','students.country as country','countries.country as country_name','countries.id as country_id')
+                       ->join('countries','countries.id','=','students.country')
                        ->first();
                        // dd($data);
         $mobile=DB::table('mobiles')->where('student_id',$id)->get();
